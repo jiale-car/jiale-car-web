@@ -277,11 +277,11 @@ function call(num){
 }
 
 function openMap(){
-  // 南昌迎宾中大道嘉乐汽车服务中心
+  // 南昌迎宾中大道与邓埠一路交界处 嘉乐汽车服务中心
   var name = encodeURIComponent('嘉乐汽车服务中心');
-  var addr = encodeURIComponent('江西省南昌市迎宾中大道嘉乐汽车服务中心');
-  // 百度地图
-  var url = 'https://api.map.baidu.com/marker?location=28.5468,115.9294&title='+name+'&content='+addr+'&output=html&coord_type=gcj02';
+  var addr = encodeURIComponent('南昌市南昌县迎宾中大道与邓埠一路交叉口');
+  // 百度地图坐标：迎宾中大道与邓埠一路交界处
+  var url = 'https://api.map.baidu.com/marker?location=28.58582,115.91748&title='+name+'&content='+addr+'&output=html&coord_type=gcj02';
   window.location.href = url;
 }
 
