@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>嘉乐汽车服务中心 - 江铃柴油面包车</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;background:#f0f2f5;color:#222;font-size:16px;line-height:1.6;max-width:480px;margin:0 auto;-webkit-tap-highlight-color:transparent}
+a{text-decoration:none;color:inherit}
+
+/* === 顶部 LOGO 区 === */
+.header{background:linear-gradient(135deg,#0d1b3e,#1a3a6e);padding:28px 20px 32px;text-align:center;position:relative;overflow:hidden}
+.header::after{content:'';position:absolute;right:-30px;top:-30px;width:140px;height:140px;border-radius:50%;background:rgba(245,130,32,0.15)}
+.header-logo{width:64px;height:64px;border-radius:50%;background:#f58220;display:inline-flex;align-items:center;justify-content:center;font-size:22px;font-weight:bold;color:#fff;margin-bottom:10px;box-shadow:0 4px 20px rgba(245,130,32,.35);position:relative;z-index:1}
+.header h1{font-size:22px;color:#fff;font-weight:bold;position:relative;z-index:1}
+.header .sub{font-size:14px;color:rgba(255,255,255,.8);margin-top:4px;position:relative;z-index:1}
+.header-tags{display:flex;justify-content:center;gap:8px;margin-top:12px;position:relative;z-index:1}
+.header-tag{background:rgba(245,130,32,.85);color:#fff;font-size:12px;padding:3px 10px;border-radius:10px}
+
+/* === 电话区（醒目的两个电话） === */
+.phone-bar{background:#fff;margin:-16px 16px 0;border-radius:12px;padding:16px;box-shadow:0 2px 12px rgba(0,0,0,.08);position:relative;z-index:2;display:flex;justify-content:space-around}
+.phone-item{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;padding:4px 12px}
+.phone-num{font-size:20px;font-weight:bold;color:#e63030;letter-spacing:1px}
+.phone-label{font-size:12px;color:#999}
+
+/* === 板块卡片 === */
+.section{margin:12px 16px;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 1px 8px rgba(0,0,0,.04)}
+.section-title{padding:14px 16px 0;font-size:18px;font-weight:bold;color:#0d1b3e;display:flex;align-items:center;gap:6px}
+.section-title::before{content:'';width:4px;height:18px;background:#f58220;border-radius:2px;display:inline-block}
+
+/* === 店铺简介 === */
+.about-text{padding:12px 16px 16px;font-size:15px;color:#555;line-height:1.9}
+.about-features{display:flex;flex-wrap:wrap;padding:0 16px 16px;gap:8px}
+.about-feature{flex:1 1 calc(50% - 4px);min-width:140px;background:#f8f9fb;border-radius:8px;padding:10px 12px;display:flex;align-items:center;gap:8px;font-size:14px;color:#333}
+.feature-icon{font-size:20px}
+
+/* === 车源列表 === */
+.car-list{padding:0 16px 16px}
+.car-item{display:flex;align-items:center;padding:14px 0;border-bottom:1px solid #f0f0f0;cursor:pointer;gap:14px}
+.car-item:last-child{border-bottom:none}
+.car-thumb{width:140px;height:90px;border-radius:8px;overflow:hidden;flex-shrink:0;background:#e8eaed}
+.car-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.car-info{flex:1;min-width:0}
+.car-name{font-size:16px;font-weight:bold;color:#222;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.car-meta{font-size:12px;color:#999;margin-top:4px}
+.car-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.car-tag{font-size:11px;color:#f58220;background:#fff5eb;padding:1px 8px;border-radius:3px}
+.car-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+.car-price{color:#e63030;font-size:22px;font-weight:bold}
+.car-price .unit{font-size:12px;margin-left:2px}
+.car-more{font-size:12px;color:#1a3a6e;border:1px solid #1a3a6e;padding:3px 10px;border-radius:12px}
+
+/* === 底部 === */
+.footer{text-align:center;padding:24px 16px 40px;color:#bbb;font-size:12px}
+
+/* ==================== 详情弹窗 ==================== */
+.overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:999;display:none;align-items:flex-end;justify-content:center}
+.overlay.show{display:flex}
+.detail-panel{background:#fff;width:100%;max-width:480px;max-height:85vh;border-radius:16px 16px 0 0;overflow-y:auto;animation:slideUp .3s ease}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.detail-close{position:sticky;top:0;background:#fff;z-index:10;display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid #eee}
+.detail-close-btn{font-size:24px;color:#999;cursor:pointer;width:32px;height:32px;display:flex;align-items:center;justify-content:center}
+.detail-img{width:100%;height:240px;object-fit:cover;display:block}
+.detail-body{padding:16px}
+.detail-title{font-size:20px;font-weight:bold;color:#0d1b3e;margin-bottom:6px}
+.detail-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.detail-tag{font-size:12px;color:#f58220;background:#fff5eb;padding:3px 10px;border-radius:4px}
+.detail-price{color:#e63030;font-size:28px;font-weight:bold;margin-bottom:4px}
+.detail-price .unit{font-size:14px}
+.detail-year{display:inline-block;font-size:13px;color:#999;background:#f5f5f5;padding:3px 10px;border-radius:6px;margin-bottom:12px}
+.detail-section{margin-top:14px}
+.detail-section h3{font-size:16px;font-weight:bold;color:#0d1b3e;margin-bottom:10px;padding-left:8px;border-left:3px solid #f58220}
+.param-table{width:100%;border-collapse:collapse}
+.param-table td{padding:8px 6px;border-bottom:1px solid #f5f5f5;font-size:14px}
+.param-table td:first-child{color:#999;width:90px}
+.param-table td:last-child{color:#333;font-weight:500}
+.detail-desc{font-size:14px;color:#666;line-height:1.9}
+.service-list{display:flex;flex-wrap:wrap;gap:10px}
+.service-item{font-size:13px;color:#333;display:flex;align-items:center;gap:6px}
+.detail-contact{display:flex;gap:12px;margin-top:16px;padding-top:16px;border-top:1px solid #eee}
+.detail-btn{flex:1;text-align:center;padding:12px 0;border-radius:10px;font-size:16px;font-weight:bold;cursor:pointer}
+.detail-btn-call{background:#e63030;color:#fff}
+.detail-btn-wechat{background:#07c160;color:#fff}
+.detail-btn-navi{background:#1a3a6e;color:#fff}
+
+/* === 底部导航 === */
+.nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #eee;display:flex;padding-bottom:env(safe-area-inset-bottom);z-index:100;max-width:480px;margin:0 auto}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;padding:8px 0;font-size:11px;color:#999;cursor:pointer}
+.nav-item .icon{font-size:20px;margin-bottom:2px}
+.nav-item.on{color:#0d1b3e;font-weight:bold}
+
+/* === Toast === */
+.toast{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.75);color:#fff;padding:12px 24px;border-radius:8px;font-size:15px;z-index:9999;display:none;white-space:nowrap}
+.toast.show{display:block}
+
+/* === 响应式 === */
+@media(min-width:481px){body{border-left:1px solid #e0e0e0;border-right:1px solid #e0e0e0}}
+</style>
+</head>
+<body>
+
+<!-- ========== 主页面 ========== -->
+<div id="main">
+
+  <!-- 顶部 LOGO -->
+  <div class="header">
+    <div class="header-logo">嘉乐</div>
+    <h1>嘉乐汽车服务中心</h1>
+    <div class="sub">专注江铃柴油面包车 · 江西南昌</div>
+    <div class="header-tags">
+      <span class="header-tag">车况透明</span>
+      <span class="header-tag">支持检测</span>
+      <span class="header-tag">诚信经营</span>
+    </div>
+  </div>
+
+  <!-- 两个电话 -->
+  <div class="phone-bar">
+    <div class="phone-item" onclick="call('16679090423')">
+      <div class="phone-num">166-7909-0423</div>
+      <div class="phone-label">📞 主号（点击拨打）</div>
+    </div>
+    <div class="phone-item" onclick="call('13979121459')">
+      <div class="phone-num">139-7912-1459</div>
+      <div class="phone-label">📞 备用（点击拨打）</div>
+    </div>
+  </div>
+
+  <!-- 店铺简介 -->
+  <div class="section">
+    <div class="section-title">🏪 店铺简介</div>
+    <div class="about-text">
+      嘉乐汽车服务中心，位于<strong>江西南昌迎宾中大道</strong>，专注江铃品牌二手柴油面包车收售多年。主营江铃特顺、全顺、域虎等柴油车型，每一台车都经过严格检测，车况透明，价格实在。支持第三方验车，支持分期，包过户，欢迎到店看车试驾。
+    </div>
+    <div class="about-features">
+      <div class="about-feature"><span class="feature-icon">🔍</span>车况透明</div>
+      <div class="about-feature"><span class="feature-icon">🔧</span>支持检测</div>
+      <div class="about-feature"><span class="feature-icon">💰</span>价格实在</div>
+      <div class="about-feature"><span class="feature-icon">🚗</span>免费试驾</div>
+      <div class="about-feature"><span class="feature-icon">📄</span>包过户</div>
+      <div class="about-feature"><span class="feature-icon">📍</span>到店看车</div>
+    </div>
+  </div>
+
+  <!-- 车源展示 -->
+  <div class="section">
+    <div class="section-title">🚐 在售车源（点击查看详情）</div>
+    <div class="car-list" id="carList"></div>
+  </div>
+
+  <!-- 底部 -->
+  <div class="footer">
+    📍 江西省南昌市迎宾中大道 · 嘉乐汽车服务中心<br>
+    每天 8:00 - 20:00 · 到店前请先来电确认
+  </div>
+
+  <!-- 底部导航 -->
+  <div class="nav">
+    <div class="nav-item" onclick="scrollToTop()">
+      <span class="icon">🚐</span><span>在售车源</span>
+    </div>
+    <div class="nav-item" onclick="call('16679090423')">
+      <span class="icon">📞</span><span>一键拨打</span>
+    </div>
+    <div class="nav-item" onclick="openMap()">
+      <span class="icon">📍</span><span>导航到店</span>
+    </div>
+    <div class="nav-item" onclick="copyWechat()">
+      <span class="icon">💬</span><span>加微信</span>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 详情弹窗 ========== -->
+<div class="overlay" id="overlay" onclick="if(event.target===this)closeDetail()">
+  <div class="detail-panel" id="detailPanel"></div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ====== 车源数据 ======
+var CARS = [
+  {id:1,name:'江铃特顺 2.8L 柴油版',color:'白色',year:'2021年',mileage:'5.8万公里',price:'6.80',engine:'2.8L 柴油涡轮增压',transmission:'5挡手动',seats:'7座',fuel:'柴油',size:'5250×1974×2415mm',load:'1.5吨',img:'assets/images/car_1.jpg',tags:['个人一手','原版原漆','柴油劲省'],desc:'2021年上牌，江铃特顺2.8L柴油版，7座，个人一手车，原版原漆，车况精品。柴油发动机省油耐用，拉货有力，是个体户和中小企业的首选。支持第三方检测，车况透明，放心购买。',feat:['支持第三方检测','7天无理由退换','免费试驾','包过户']},
+  {id:2,name:'江铃特顺 2.8L 柴油版',color:'银色',year:'2020年',mileage:'8.2万公里',price:'5.98',engine:'2.8L 柴油涡轮增压',transmission:'5挡手动',seats:'7座',fuel:'柴油',size:'5250×1974×2415mm',load:'1.5吨',img:'assets/images/car_2.jpg',tags:['车况好','价格实惠','柴油省油'],desc:'2020年上牌，银色外观，车况好，发动机声音好听，底盘扎实。适合拉货跑业务，每公里不到5毛钱，用车成本低。',feat:['支持第三方检测','免费试驾','包过户']},
+  {id:3,name:'江铃福特全顺 2.0T',color:'白色',year:'2022年',mileage:'3.5万公里',price:'9.98',engine:'2.0T 柴油涡轮增压',transmission:'6挡手动',seats:'9座',fuel:'柴油',size:'5340×2032×2415mm',load:'1.8吨',img:'assets/images/car_3.jpg',tags:['准新车','福特品质','空间大'],desc:'2022年上牌，福特全顺2.0T柴油版，准新车况，仅行驶3.5万公里。福特发动机动力强劲，空间大，适合载人拉货两用。小企业接待、员工通勤、拉货全能选手。',feat:['支持第三方检测','7天无理由退换','免费试驾','包过户','送首次保养']},
+  {id:4,name:'江铃福特全顺 2.0T',color:'黑色',year:'2021年',mileage:'6.0万公里',price:'8.50',engine:'2.0T 柴油涡轮增压',transmission:'6挡手动',seats:'9座',fuel:'柴油',size:'5340×2032×2415mm',load:'1.8吨',img:'assets/images/car_4.jpg',tags:['商务首选','车况精品','福特品质'],desc:'黑色福特全顺，外观大气，适合商务接待。2.0T柴油发动机动力足，内饰干净整洁，9座布局空间充裕。',feat:['支持第三方检测','免费试驾','包过户']},
+  {id:5,name:'江铃域虎7 2.0T 柴油',color:'白色',year:'2022年',mileage:'4.2万公里',price:'7.88',engine:'2.0T 柴油涡轮增压',transmission:'6挡手动',seats:'5座',fuel:'柴油',size:'5300×1900×1860mm',load:'1.2吨',img:'assets/images/car_5.jpg',tags:['皮卡实用','准新车','越野气息'],desc:'江铃域虎7皮卡，2.0T柴油发动机，动力强劲，通过性好。既能拉货又能代步，适合工地、农村、山区等多种使用场景。',feat:['支持第三方检测','免费试驾','包过户']},
+  {id:6,name:'江铃宝典 2.8L 柴油',color:'蓝色',year:'2019年',mileage:'10.5万公里',price:'4.28',engine:'2.8L 柴油自然吸气',transmission:'5挡手动',seats:'5座',fuel:'柴油',size:'5200×1820×1720mm',load:'1.5吨',img:'assets/images/car_6.jpg',tags:['经济实惠','皮卡拉货','耐用省油'],desc:'蓝色江铃宝典皮卡，2019年上牌，价格实惠，蓝色车身独特耐看。皮卡设计，货箱大，拉货方便，柴油发动机省油耐用，是创业好帮手。',feat:['支持第三方检测','包过户']},
+  {id:7,name:'江铃凯运 2.8L 柴油',color:'白色',year:'2021年',mileage:'6.3万公里',price:'7.68',engine:'2.8L 柴油涡轮增压',transmission:'5挡手动',seats:'2座（货车版）',fuel:'柴油',size:'5995×2100×3050mm',load:'2.5吨',img:'assets/images/car_7.jpg',tags:['大载重量','货车版','运输利器'],desc:'江铃凯运厢式货车，2.8L柴油发动机，载重量大，适合城市配送、物流运输。车厢封闭，防雨防盗，是做快递、配送生意的理想选择。',feat:['支持第三方检测','免费试驾','包过户']},
+  {id:8,name:'江铃特顺短轴 2.8L',color:'灰色',year:'2020年',mileage:'7.6万公里',price:'5.58',engine:'2.8L 柴油涡轮增压',transmission:'5挡手动',seats:'7座',fuel:'柴油',size:'4900×1974×2415mm',load:'1.2吨',img:'assets/images/car_8.jpg',tags:['短轴好开','市区灵活','好停车'],desc:'江铃特顺短轴版，车身更短，市区开灵活好停车。2.8L柴油发动机经济省油，7座布局载人拉货都合适，是城市配送和小型企业的好选择。',feat:['支持第三方检测','免费试驾','包过户']},
+  {id:9,name:'江铃福特新全顺 2.0T',color:'白色',year:'2023年',mileage:'2.1万公里',price:'11.80',engine:'2.0T 柴油涡轮增压',transmission:'6挡手动',seats:'9座',fuel:'柴油',size:'5340×2032×2415mm',load:'1.8吨',img:'assets/images/car_9.jpg',tags:['几乎新车','新全顺','配置高'],desc:'2023年上牌，福特新全顺，几乎新车况，仅行驶2.1万公里。最新款外观内饰，配置高，舒适性好。适合商务接待、员工通勤、高端物流等场景。',feat:['支持第三方检测','7天无理由退换','免费试驾','包过户','送全年保养']},
+  {id:10,name:'江铃域虎9 2.0T 柴油',color:'黑色',year:'2022年',mileage:'3.8万公里',price:'9.88',engine:'2.0T 柴油涡轮增压',transmission:'8挡自动',seats:'5座',fuel:'柴油',size:'5450×1950×1870mm',load:'1.2吨',img:'assets/images/car_10.jpg',tags:['自动挡','高端皮卡','域虎旗舰'],desc:'江铃域虎9旗舰皮卡，2.0T柴油发动机+8挡自动变速箱，好开舒适。黑色外观霸气，内饰豪华，既能商务接待又能拉货越野，一车多用。',feat:['支持第三方检测','7天无理由退换','免费试驾','包过户','送首次保养']}
+];
+
+// ====== 店铺信息 ======
+var SHOP = {
+  name:'嘉乐汽车服务中心',
+  address:'江西省南昌市迎宾中大道嘉乐汽车服务中心',
+  lat:28.5468,
+  lng:115.9294
+};
+
+// ====== 渲染车源列表 ======
+function renderCars(){
+  var html = '';
+  CARS.forEach(function(c){
+    html += '<div class="car-item" onclick="openDetail('+c.id+')">'+
+      '<div class="car-thumb"><img src="'+c.img+'" alt="'+c.name+'" onerror="this.parentElement.style.background=\'#ddd\'"></div>'+
+      '<div class="car-info">'+
+        '<div class="car-name">'+c.name+'</div>'+
+        '<div class="car-meta">'+c.year+' · '+c.mileage+' · '+c.color+'</div>'+
+        '<div class="car-tags">'+c.tags.map(function(t){return'<span class="car-tag">'+t+'</span>'}).join('')+'</div>'+
+        '<div class="car-bottom">'+
+          '<div class="car-price">¥'+c.price+'<span class="unit">万</span></div>'+
+          '<div class="car-more">查看详情</div>'+
+        '</div>'+
+      '</div></div>';
+  });
+  document.getElementById('carList').innerHTML = html;
+}
+
+// ====== 打开详情弹窗 ======
+function openDetail(id){
+  var c = CARS.find(function(x){return x.id===id});
+  if(!c) return;
+  var html =
+    '<div class="detail-close">'+
+      '<div style="font-size:18px;font-weight:bold;color:#0d1b3e">'+c.name+'</div>'+
+      '<div class="detail-close-btn" onclick="closeDetail()">✕</div>'+
+    '</div>'+
+    '<img class="detail-img" src="'+c.img+'" alt="'+c.name+'" onerror="this.style.background=\'#ddd\'">'+
+    '<div class="detail-body">'+
+      '<div class="detail-title">'+c.name+' · '+c.color+'</div>'+
+      '<div class="detail-tags">'+c.tags.map(function(t){return'<span class="detail-tag">'+t+'</span>'}).join('')+'</div>'+
+      '<div class="detail-price">¥'+c.price+'<span class="unit">万</span></div>'+
+      '<div class="detail-year">'+c.year+'</div>'+
+      '<div class="detail-section"><h3>📋 车辆参数</h3>'+
+        '<table class="param-table">'+
+          '<tr><td>上牌年份</td><td>'+c.year+'</td></tr>'+
+          '<tr><td>行驶里程</td><td>'+c.mileage+'</td></tr>'+
+          '<tr><td>发动机</td><td>'+c.engine+'</td></tr>'+
+          '<tr><td>变速箱</td><td>'+c.transmission+'</td></tr>'+
+          '<tr><td>座位数</td><td>'+c.seats+'</td></tr>'+
+          '<tr><td>燃油类型</td><td>'+c.fuel+'</td></tr>'+
+          '<tr><td>车身尺寸</td><td>'+c.size+'</td></tr>'+
+          '<tr><td>载重量</td><td>'+c.load+'</td></tr>'+
+        '</table>'+
+      '</div>'+
+      '<div class="detail-section"><h3>📝 车况描述</h3>'+
+        '<div class="detail-desc">'+c.desc+'</div>'+
+      '</div>'+
+      '<div class="detail-section"><h3>🛡️ 服务保障</h3>'+
+        '<div class="service-list">'+c.feat.map(function(f){return'<div class="service-item">✅ '+f+'</div>'}).join('')+'</div>'+
+      '</div>'+
+      '<div class="detail-contact">'+
+        '<div class="detail-btn detail-btn-call" onclick="call(\'16679090423\')">📞 拨打主号</div>'+
+        '<div class="detail-btn detail-btn-wechat" onclick="copyWechat()">💬 加微信</div>'+
+        '<div class="detail-btn detail-btn-navi" onclick="openMap()">📍 导航到店</div>'+
+      '</div>'+
+    '</div>';
+  document.getElementById('detailPanel').innerHTML = html;
+  document.getElementById('overlay').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeDetail(){
+  document.getElementById('overlay').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+// ====== 功能函数 ======
+function call(num){
+  window.location.href = 'tel:' + num;
+}
+
+function openMap(){
+  // 南昌迎宾中大道嘉乐汽车服务中心
+  var name = encodeURIComponent('嘉乐汽车服务中心');
+  var addr = encodeURIComponent('江西省南昌市迎宾中大道嘉乐汽车服务中心');
+  // 优先用高德地图（微信里最常用）
+  var url = 'https://uri.amap.com/marker?position=115.9294,28.5468&name='+name+'&callnative=1';
+  window.location.href = url;
+}
+
+function copyWechat(){
+  var text = '加我微信看车：嘉乐汽车服务中心，南昌迎宾中大道，电话16679090423';
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(text).then(function(){toast('已复制，请打开微信添加好友')});
+  }else{
+    var i = document.createElement('input');
+    i.value = text;document.body.appendChild(i);
+    i.select();document.execCommand('copy');document.body.removeChild(i);
+    toast('已复制，请打开微信添加好友');
+  }
+}
+
+function toast(msg){
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function(){t.classList.remove('show')},2000);
+}
+
+function scrollToTop(){
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ====== 初始化 ======
+renderCars();
+</script>
+</body>
+</html>
