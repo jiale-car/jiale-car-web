@@ -280,8 +280,8 @@ function openMap(){
   // 南昌迎宾中大道嘉乐汽车服务中心
   var name = encodeURIComponent('嘉乐汽车服务中心');
   var addr = encodeURIComponent('江西省南昌市迎宾中大道嘉乐汽车服务中心');
-  // 优先用高德地图（微信里最常用）
-  var url = 'https://uri.amap.com/marker?position=115.9294,28.5468&name='+name+'&callnative=1';
+  // 百度地图
+  var url = 'https://api.map.baidu.com/marker?location=28.5468,115.9294&title='+name+'&content='+addr+'&output=html&coord_type=gcj02';
   window.location.href = url;
 }
 
